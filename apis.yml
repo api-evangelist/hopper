@@ -1,17 +1,56 @@
 aid: hopper
 name: Hopper
-description: 'Hopper is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Hopper Inc. is a Montreal-based online travel agency and B2B travel fintech
+  company, founded in 2007 by Frederic Lalonde, Joost Ouwerkerk, and Dakota
+  Smith. Its consumer mobile app pairs flight, hotel, car, and homes booking
+  with proprietary price prediction, and monetizes a family of "for any reason"
+  fintech ancillaries — Price Freeze, Cancel For Any Reason (CFAR), Change For
+  Any Reason, and Disruption Guarantee. Through Hopper Technology Solutions
+  (HTS), the company licenses those same ancillaries, agentic AI customer
+  servicing (HTS Assist), white-label travel commerce (HTS Stays, HTS Cars, HTS
+  Packages), and loyalty portals to airlines, banks, and travel providers
+  including Capital One, Air Canada, Wizz Air, Porter, Avelo, and RBC. Hopper
+  has raised more than $740 million from investors including Goldman Sachs,
+  Brookfield, Citigroup, and Caisse de Depot et Placement du Quebec, and its
+  shares trade on secondary marketplaces such as Forge Global and EquityZen
+  ahead of a possible public listing.
 url: https://raw.githubusercontent.com/api-evangelist/hopper/refs/heads/main/apis.yml
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/hopper-com.png
 x-type: company
 x-source: harvest:secondary-market
 x-tier: stub
-x-tier-reason: harvest
+x-tier-reason: duplicate-pending-merge
+x-duplicate-of: hopper-com
+x-duplicate-candidates:
+- hopper-com
+- hopper-travel
+x-duplicate-note: >-
+  This repo was created from the secondary-market harvest backlog against the
+  Forge Global private-stock listing for "Hopper". Verified during the
+  2026-08-01 enrichment pass: that listing is Hopper Inc., the Montreal travel
+  app and HTS parent — the SAME company already profiled at all/hopper-com
+  (5 harvested HTS Airline API OpenAPIs, authentication, agentic-access,
+  domain-security, blogs, screenshots) and again at all/hopper-travel (plans,
+  rate-limits, finops, blogs). No parallel artifact tree was generated here on
+  purpose: a third profile would split one company across three apis.io pages
+  and three Kin Scores. Per the duplicate-provider-retirement procedure, the
+  survivor by depth is hopper-com; this slug should be merged into it and
+  tombstoned in api-search/network/_data/retired.yml rather than enriched.
 specificationVersion: '0.20'
 created: '2026-08-01'
 modified: '2026-08-01'
 tags:
 - Company
+- Travel
+- Online Travel Agency
+- Travel Fintech
+- Price Prediction
+- Airlines
+- Hotels
+- B2B
+- Embedded Finance
+- Secondary Market
 apis: []
 maintainers:
 - FN: Kin Lane
@@ -20,4 +59,41 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
+  url: https://www.hopper.com
+- type: B2B
+  url: https://hts.hopper.com
+- type: Support
+  url: https://help.hopper.com/
+- type: Blog
+  url: https://hts.hopper.com/newsroom
+- type: GitHubOrganization
+  url: https://github.com/hopper
+- type: SecondaryMarket
   url: https://forgeglobal.com/hopper_stock/
+x-enrichment:
+  date: '2026-08-01'
+  status: minimal
+  artifacts_added: 0
+  pass: local-v1
+x-discovery:
+  date: '2026-08-01'
+  method: probed
+  note: >-
+    STEP 0b contract discovery run against hts.hopper.com, www.hopper.com,
+    hopper.com, airlines-api.hopper.com, api.hopper.com, and
+    developer.hopper.com. Every /.well-known/* path (agent-card.json,
+    agent.json, security.txt, openid-configuration, oauth-authorization-server,
+    oauth-protected-resource, api-catalog, ai-plugin.json), /llms.txt, and every
+    spec path (/openapi.json, /openapi.yaml, /swagger.json, /api-docs) MISSED.
+    www.hopper.com and hts.hopper.com are single-page-app catch-alls that answer
+    HTTP 200 with an HTML shell for ANY path — a nonsense control path returns a
+    byte-identical body — so those 200s were correctly rejected as false
+    positives per the pipeline contract. airlines-api.hopper.com returns 404 at
+    root and at /openapi.json. No agent card, no llms.txt, no security.txt, and
+    no self-hosted machine-readable contract exists on any Hopper host.
+  results:
+  - {host: hts.hopper.com, agent_card: none, llms_txt: none, security_txt: none, openapi: none, note: spa-catch-all-200}
+  - {host: www.hopper.com, agent_card: none, llms_txt: none, security_txt: none, openapi: none, note: spa-catch-all-200}
+  - {host: airlines-api.hopper.com, agent_card: none, llms_txt: none, security_txt: none, openapi: none, note: http-404}
+  - {host: api.hopper.com, agent_card: none, llms_txt: none, security_txt: none, openapi: none}
+  - {host: developer.hopper.com, agent_card: none, llms_txt: none, security_txt: none, openapi: none}
